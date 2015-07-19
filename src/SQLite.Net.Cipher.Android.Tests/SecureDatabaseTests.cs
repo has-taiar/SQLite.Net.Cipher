@@ -36,15 +36,15 @@ namespace SQLite.Net.Cipher.Android.Tests
 			var userFromDb = database.SecureGet<SampleUser>(user.Id, keySeed);
 			Assert.IsNotNull(userFromDb);
 			Assert.AreEqual("Has AlTaiar",  userFromDb.Name);
-			Assert.AreEqual("very secure password :)", user.Password);
+			Assert.AreEqual("very secure password :)", userFromDb.Password);
 
 
 			var directAccessDb = (SQLiteConnection)database;
 			var userAccessedDirectly = directAccessDb.Query<SampleUser>("SELECT * FROM SampleUser").FirstOrDefault();
 
 			Assert.IsNotNull(userAccessedDirectly);
-			Assert.AreEqual("Has AlTaiar", userFromDb.Name);
-			Assert.AreNotEqual("very secure password :)", user.Password);
+			Assert.AreEqual("Has AlTaiar", userAccessedDirectly.Name);
+			Assert.AreNotEqual("very secure password :)", userAccessedDirectly.Password);
 		}
 	}
 

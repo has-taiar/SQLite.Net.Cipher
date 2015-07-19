@@ -1,7 +1,7 @@
-# KeyChain.Net
+# SQLite.Net.Cipher
 
-A unified, simple to use library that enables developers storing, accessing, updating and deleting keys and passwords on multiple platforms. Internally, the library uses iOS KeyChain and Android KeyStore features. 
-The library exposes KeyChainHelper which is a simple one-entry to the library on all platforms. KeyChainHelper implements IKeyChainHelper on all platform. Have a look at IKeyChainHelper (on github) to gain a better understanding of what you can do with it. 
+An easy to use extension for SQLite.Net PCL that allows you to seamlessly encrypt/decrypt data when getting data in/out of the database. This library allows you to securely encrypt/decrypt group of your objects' properties simply by decorating these propertiese with one attribute (Secure). The library Works great one all major platforms (iOS, Android, Windows Universal, and .NET 4.0 onwards). There is a dependency on SQLite.Net PCL and PCLCrypto.  
+
 
 
 ## License
@@ -9,22 +9,102 @@ This projected is licensed under the terms of the MIT license.
 See LICENSE.TXT
 
 
+## Code Sample
+To use the library you need to subclass SecureDatabase and add the attribute [Secure] on the properties that you want to secure. 
+    
+	public class MyDatabase : SecureDatabase
+	{
+		public MyDatabase(ISQLitePlatform platform, string dbfile): base(platform, dbfile)
+		{
+		}
+			
+		protected override void CreateTables()
+		{
+			CreateTable<SampleUser>();
+		}
+	}
+	
+	public class SampleUser : IModel
+	{
+		public string Id { get; set; }
+		public string Name { get; set; }
+			
+		[Secure] // This property will be encrypted when inserted to the database, and decrypted when read out of the db again.
+		public string Password { get; set; }
+			
+		public string Bio { get; set; }
+	}
+	
+
+
+
 ## iOS
-    var helper = new KeyChain.Net.XamarinIOS.KeyChainHelper();
-	var isSaved = helper.SetKey("myKey", "myKeyValue");
-	var keyValue = helper.GetKey("myKey");
-	var isDeleted = helper.DeleteKey("myKey");
+	var dbFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "mysequredb.db3");
+	var platform = new SQLite.Net.Platform.XamarinIOS.SQLitePlatformIOS();
+	ISecureDatabase database = new MyDatabase(platform, dbFilePath);
+	var keySeed = "my very very secure key seed. This can be any string, with any size. You should use PCLCrypt strong random generator for this";
+	
+	var user = new SampleUser()
+	{
+		Name = "Has AlTaiar",
+		Password = "very secure password :)",
+		Bio = "Very cool guy :) ",
+		Id = Guid.NewGuid().ToString()
+	};
+	
+	// insert object to the database (it will encrypt all [Secure] properties)
+	var inserted = database.SecureInsert<SampleUser>(user, keySeed);
+	
+	var newUser = database.SecureGet<SampleUser>(user.Id, keySeed);
+	Assert.AreEqual("very secure password :)", newUser.Password); // password will be decrypted seamlessly when acceed from db. 
 
 ## Android
-    var helper = new KeyChain.Net.XamarinAndroid.KeyChainHelper(myActivity, "myKeyProtectionPassword");
-	var isSaved = helper.SetKey("myKey", "myKeyValue");
-	var keyValue = helper.GetKey("myKey");
-	var isDeleted = helper.DeleteKey("myKey");
+	var dbFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "mysequredb.db3");
+	var platform = new SQLite.Net.Platform.XamarinAndroid.SQLitePlatformAndroid();
+	ISecureDatabase database = new MyDatabase(platform, dbFilePath);
+	var keySeed = "my very very secure key seed. This can be any string, with any size. You should use PCLCrypt strong random generator for this";
+	
+	var user = new SampleUser()
+	{
+		Name = "Has AlTaiar",
+		Password = "very secure password :)",
+		Bio = "Very cool guy :) ",
+		Id = Guid.NewGuid().ToString()
+	};
+	
+	// insert object to the database (it will encrypt all [Secure] properties)
+	var inserted = database.SecureInsert<SampleUser>(user, keySeed);
+	
+	var newUser = database.SecureGet<SampleUser>(user.Id, keySeed);
+	Assert.AreEqual("very secure password :)", newUser.Password); // password will be decrypted seamlessly when acceed from db.
 
-### Customising the KeyChainHelper 
-When initialising the KeyChainHelper, you could customise it for your app. On iOS for instance, you could change the default behaviour and enable your KeyChain items to be synced with iCloud. You could also change the default keychain accessibility policy to anything other than the default Accessible.Always. 
-On Android, you could change the default file name, where your private keys will be stored, the serviceId, and the default password protection key. 
 
-    // more samples will be added here
-	// var helper = new KeyChain.Net.XamarinAndroid.KeyChainHelper(myActivity, "myKeyProtectionPassword");
+## Windows Universal (and Other platform)
+You could use the same code samples above for all other platforms. The only things to change, you database file path and this line:
+	
+	var dbFilePath = "set-your-db-file-path";
+	var platform = new SQLite.Net.Platform.WhateverPlatformYouAreUsing.SQLitePlatformX();
+	ISecureDatabase database = new MyDatabase(platform, dbFilePath);
+	
+	// the rest of the code samples above works the same way.
 
+
+## How-To use it?
+To install, simply grab the package from Nuget
+	
+	> Install-Package SQLite.Net.Cipher
+
+
+### Tips
+
++	Use Strong Random generators, like the one provided by PCLCrypto. Avoid using simple-to-guess passwords.
++	Avoid storing the encryption key on the device. If you have to do so, use KeyChain.Net to store your key in the device specialised database of keys. 
++	SQLite.Net.Cipher allows you to have your implementation of CryptoService, which is used for encryption/decryption. 
++	Your Data models (objects) need to implement IModel. 
+
+
+### Limitations:
+
+1.	The library assumes that your property values are using UTF-8 for encoding.
+2.	The [Secure] property can only be used on properties of type string. 
+3.	Limited support to generic methods like Query<T>(), and ExecuteScalar<T>(), use CryptoService along with these methods to construct your own secure sql query. 
