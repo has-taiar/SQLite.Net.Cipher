@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+    <metadata>
+        <id>SQLite.Net.Cipher</id>
+        <version>0.0.1</version>
+        <title>SQLite.Net.Cipher</title>
+        <authors>Has AlTaiar</authors>
+        <owners>Has AlTaiar</owners>
+        <licenseUrl>https://github.com/has-taiar/SQLite.Net.Cipher/master/LICENSE.txt</licenseUrl>
+        <projectUrl>https://github.com/has-taiar/SQLite.Net.Cipher</projectUrl>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>
+			An easy to use extension for SQLite.Net PCL that allows you to seamlessly encrypt/decrypt data when inserted/accessed from the database by adding one simple attribute. Works great one all major platforms (iOS, Android, Windows Universal)
+		</description>
+        <summary>An easy to use extension for SQLite.Net PCL that allows you to seamlessly encrypt/decrypt data when inserted/accessed from the database by adding one simple attribute. Works great one all major platforms (iOS, Android, Windows Universal). </summary>
+        <releaseNotes>https://github.com/has-taiar/KeyChain.Net/commits</releaseNotes>
+        <tags>database pcl sql sqlite secure protect cipher encrypt security protection ios android windows xamarin monotouch monodroid winrt winphone </tags>
+        <releaseNotes>Initial version.</releaseNotes>
+		<dependencies>
+			<group>
+				<dependency id="PCLCrypto" version="[0.0.1)"/>
+				<dependency id="SQLite.Net-PCL" version="[3.0.5)"/>
+			</group>
+		</dependencies>
+    </metadata>
+    <files>
+        <!-- PCL -->
+        <file src="SQLite.Net.Cipher\SQLite.Net.Cipher.dll" target="lib\portable-net45+netcore45+wpa81+wp8+MonoAndroid10+Xamarin.iOS10\SQLite.Net.Cipher.dll" />
+		
+		<!-- Xamarin.iOS (Classic)-->
+        <file src="SQLite.Net.Cipher\SQLite.Net.Cipher.dll" target="lib\monotouch\SQLite.Net.Cipher.dll" />        
+
+        <!-- Xamarin.iOS (Unified)-->
+        <file src="SQLite.Net.Cipher\SQLite.Net.Cipher.dll" target="lib\Xamarin.iOS10\SQLite.Net.Cipher.dll" />
+
+        <!-- Xamarin.Android -->
+        <file src="SQLite.Net.Cipher\SQLite.Net.Cipher.dll" target="lib\MonoAndroid\SQLite.Net.Cipher.dll" />
+
+        <!-- Windows Phone & Windows 8.1 -->
+        <file src="SQLite.Net.Cipher\SQLite.Net.Cipher.dll" target="lib\portable-win81+wpa81\SQLite.Net.Cipher.dll" />
+
+        <!-- Windows 8.0 -->
+        <file src="SQLite.Net.Cipher\SQLite.Net.Cipher.dll" target="lib\Windows8\SQLite.Net.Cipher.dll" />
+
+        <!-- Windows Phone 8.0 (ARM) -->
+        <file src="SQLite.Net.Cipher\SQLite.Net.Cipher.dll" target="lib\windowsphone8\ARM\SQLite.Net.Cipher.dll" />
+
+        <!-- Windows Phone 8.0 (x86) -->
+        <file src="SQLite.Net.Cipher\SQLite.Net.Cipher.dll" target="lib\windowsphone8\x86\SQLite.Net.Cipher.dll" />
+
+        <!-- Generic -->
+        <file src="SQLite.Net.Cipher\SQLite.Net.Cipher.dll" target="lib\net40\SQLite.Net.Cipher.dll" />
+    </files>
+</package>
