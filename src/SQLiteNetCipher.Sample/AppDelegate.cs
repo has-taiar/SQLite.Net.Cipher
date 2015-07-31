@@ -99,7 +99,7 @@ namespace SQLiteNetCipher.Sample
 
 			// need to establish a direct connection to the database and get the object to test the encrypted value. 
 			var directAccessDb = (SQLiteConnection)database;
-			var userAccessedDirectly = directAccessDb.Query<SampleUser>("SELECT * FROM SampleUser").FirstOrDefault();
+			var userAccessedDirectly = directAccessDb.Query<SampleUser>("SELECT * FROM SampleUser", 0).FirstOrDefault();
 
 			Console.WriteLine("User was accessed Directly from the database (with no decryption): username= {0}, password={1}", userAccessedDirectly.Name, userAccessedDirectly.Password);
 		}

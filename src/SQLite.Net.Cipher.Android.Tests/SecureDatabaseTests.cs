@@ -6,6 +6,7 @@ using SQLite.Net.Cipher.Data;
 using SQLite.Net.Cipher.Interfaces;
 using SQLite.Net.Cipher.Model;
 using SQLite.Net.Interop;
+using System.Collections.Generic;
 
 namespace SQLite.Net.Cipher.Android.Tests
 {
@@ -40,7 +41,7 @@ namespace SQLite.Net.Cipher.Android.Tests
 
 
 			var directAccessDb = (SQLiteConnection)database;
-			var userAccessedDirectly = directAccessDb.Query<SampleUser>("SELECT * FROM SampleUser").FirstOrDefault();
+			var userAccessedDirectly = directAccessDb.Query<SampleUser>("SELECT * FROM SampleUser", 0).FirstOrDefault();
 
 			Assert.IsNotNull(userAccessedDirectly);
 			Assert.AreEqual("Has AlTaiar", userAccessedDirectly.Name);

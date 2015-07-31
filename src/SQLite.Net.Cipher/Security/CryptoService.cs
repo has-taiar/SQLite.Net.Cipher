@@ -5,6 +5,10 @@ using SQLite.Net.Cipher.Interfaces;
 
 namespace SQLite.Net.Cipher.Security
 {
+    /// <summary>
+    /// This entity is responsible for generating keys, encrypting, decrypting data, and computing hash
+    /// This is the default crypto service that is used by SecureDatabase but you can build your own by implementing ICryptoService
+    /// </summary>
 	public class CryptoService : ICryptoService
 	{
 		public CryptoService ()
@@ -18,6 +22,8 @@ namespace SQLite.Net.Cipher.Security
 		/// <returns>SHA256 value of the input string</returns>
 		public string ComputeHash (string input)
 		{
+            if (string.IsNullOrEmpty(input)) return string.Empty;
+
 			var hasher = PCLCrypto.WinRTCrypto.HashAlgorithmProvider.OpenAlgorithm(HashAlgorithm.Sha256);
 	        byte[] inputBytes = Encoding.UTF8.GetBytes(input);
 	        byte[] hash = hasher.HashData(inputBytes);
@@ -47,6 +53,12 @@ namespace SQLite.Net.Cipher.Security
 		/// <returns>a string that represents the base64 of the encrypted input text</returns>
 		public string Encrypt(string dataText, string keyText, string ivText)
 		{
+            if (string.IsNullOrEmpty(keyText))
+                throw new ArgumentException("KeyText parameter cannot be null or empty string");
+
+            if (string.IsNullOrEmpty(dataText))
+                return string.Empty;
+
 			byte[] data = Encoding.UTF8.GetBytes(dataText);
 			byte[] iv = string.IsNullOrEmpty(ivText) ?  null : Encoding.UTF8.GetBytes(ivText); 
 
@@ -71,7 +83,13 @@ namespace SQLite.Net.Cipher.Security
 		/// <returns>the original text, the result of the decryption.</returns>
 		public string Decrypt(string dataText, string keyText, string ivText)
 		{
-			byte[] data = Convert.FromBase64String(dataText);
+            if (string.IsNullOrEmpty(keyText))
+                throw new ArgumentException("KeyText parameter cannot be null or empty string");
+
+            if (string.IsNullOrEmpty(dataText))
+                return string.Empty;
+
+            byte[] data = Convert.FromBase64String(dataText);
 			byte[] iv = string.IsNullOrEmpty(ivText) ? null : Encoding.UTF8.GetBytes(ivText);
 
 			var provider = WinRTCrypto.SymmetricKeyAlgorithmProvider.OpenAlgorithm(SymmetricAlgorithm.AesCbcPkcs7);

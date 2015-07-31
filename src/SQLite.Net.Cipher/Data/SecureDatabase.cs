@@ -4,10 +4,15 @@ using System.Reflection;
 using SQLite.Net.Cipher.Interfaces;
 using SQLite.Net.Cipher.Model;
 using SQLite.Net.Cipher.Security;
+using SQLite.Net.Cipher.Utility;
 using SQLite.Net.Interop;
 
 namespace SQLite.Net.Cipher.Data
 {
+    /// <summary>
+    /// This is the main entiry in this library. Extend this class to get the benefits of this library. 
+    /// You will need to implement the abstract method CreateTables();
+    /// </summary>
 	public abstract class SecureDatabase : SQLiteConnection, ISecureDatabase
 	{
 		private ICryptoService _cryptoService;
@@ -77,6 +82,8 @@ namespace SQLite.Net.Cipher.Data
 		/// <returns>no of affected rows</returns>
 		int ISecureDatabase.SecureInsert<T>(T obj, string keySeed)
 		{
+            Guard.CheckForNull(obj, "obj cannot be null");
+
 			Encrypt(obj,keySeed);
 			return base.Insert(obj);
 		}
@@ -91,7 +98,9 @@ namespace SQLite.Net.Cipher.Data
 		/// <returns>no of affected rows</returns>
 		int ISecureDatabase.SecureUpdate<T>(T obj, string keySeed)
 		{
-			Encrypt(obj, keySeed);
+            Guard.CheckForNull(obj, "obj cannot be null");
+
+            Encrypt(obj, keySeed);
 			return base.Update(obj);
 		}
 
@@ -149,28 +158,26 @@ namespace SQLite.Net.Cipher.Data
 		#region Implementation
 
 		private void Encrypt(object model, string keySeed)
+        {
+            if (model == null) return;
+
+            IEnumerable<PropertyInfo> secureProperties = GetSecureProperties(model);
+
+            foreach (var propertyInfo in secureProperties)
+            {
+                var rawPropertyValue = (string)propertyInfo.GetValue(model);
+                var encrypted = _cryptoService.Encrypt(rawPropertyValue, keySeed, null);
+                propertyInfo.SetValue(model, encrypted);
+            }
+        }
+
+        private void Decrypt(object model, string keySeed)
 		{
-			var type = model.GetType();
+            if (model == null) return;
 
-			var secureProperties = type.GetRuntimeProperties()
-							.Where(pi => pi.PropertyType == typeof (string) && pi.GetCustomAttributes<Secure>(true).Any());
+            IEnumerable<PropertyInfo> secureProperties = GetSecureProperties(model);
 
-			foreach (var propertyInfo in secureProperties)
-			{
-				var rawPropertyValue = (string) propertyInfo.GetValue(model);
-				var encrypted = _cryptoService.Encrypt(rawPropertyValue, keySeed, null);
-				propertyInfo.SetValue(model, encrypted);
-			}
-		}
-
-		private void Decrypt(object model, string keySeed)
-		{
-			var type = model.GetType();
-
-			var secureProperties = type.GetRuntimeProperties()
-							.Where(pi => pi.PropertyType == typeof(string) && pi.GetCustomAttributes<Secure>(true).Any());
-
-			foreach (var propertyInfo in secureProperties)
+            foreach (var propertyInfo in secureProperties)
 			{
 				var rawPropertyValue = (string)propertyInfo.GetValue(model);
 				var decrypted = _cryptoService.Decrypt(rawPropertyValue, keySeed, null);
@@ -178,7 +185,16 @@ namespace SQLite.Net.Cipher.Data
 			}
 		}
 
-		private void DecryptList<T>(List<T> list, string keySeed)
+        private static IEnumerable<PropertyInfo> GetSecureProperties(object model)
+        {
+            var type = model.GetType();
+
+            var secureProperties = type.GetRuntimeProperties()
+                            .Where(pi => pi.PropertyType == typeof(string) && pi.GetCustomAttributes<Secure>(true).Any());
+            return secureProperties;
+        }
+
+        private void DecryptList<T>(List<T> list, string keySeed)
 		{
 			foreach (var item in list)
 				Decrypt(item, keySeed);

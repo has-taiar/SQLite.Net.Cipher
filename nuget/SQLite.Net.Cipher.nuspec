@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
         <id>SQLite.Net.Cipher</id>
-        <version>0.0.1</version>
+        <version>0.0.2</version>
         <title>SQLite.Net.Cipher</title>
         <authors>Has AlTaiar</authors>
         <owners>Has AlTaiar</owners>
@@ -15,11 +15,10 @@
         <summary>An easy to use extension for SQLite.Net PCL that allows you to seamlessly encrypt/decrypt data when inserted/accessed from the database by adding one simple attribute. Works great one all major platforms (iOS, Android, Windows Universal). </summary>
         <releaseNotes>https://github.com/has-taiar/KeyChain.Net/commits</releaseNotes>
         <tags>database pcl sql sqlite secure protect cipher encrypt security protection ios android windows xamarin monotouch monodroid winrt winphone </tags>
-        <releaseNotes>Initial version.</releaseNotes>
-		<dependencies>
+        <dependencies>
 			<group>
-				<dependency id="PCLCrypto" version="[0.0.1)"/>
-				<dependency id="SQLite.Net-PCL" version="[3.0.5)"/>
+				<dependency id="SQLite.Net-PCL" version="3.0.5"/>
+				<dependency id="PCLCrypto" version="1.0.2.15130"/>
 			</group>
 		</dependencies>
     </metadata>

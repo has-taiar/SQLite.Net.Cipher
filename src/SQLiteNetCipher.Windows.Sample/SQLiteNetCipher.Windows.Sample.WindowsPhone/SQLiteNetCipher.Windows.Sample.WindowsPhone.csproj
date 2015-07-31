@@ -121,6 +121,12 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\SQLite.Net.Cipher\SQLite.Net.Cipher.csproj">
+      <Project>{58e0bebe-b558-4f4a-b050-150e21bf71f0}</Project>
+      <Name>SQLite.Net.Cipher</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '12.0' ">
     <VisualStudioVersion>12.0</VisualStudioVersion>
   </PropertyGroup>
