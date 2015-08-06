@@ -81,14 +81,6 @@ namespace SQLiteNetCipher.Sample
 				Name = "Has AlTaiar", Password = "very secure password :)", Bio = "Very cool guy :) ", Id = Guid.NewGuid().ToString()
 			};
 
-			var service = new CryptoService();
-			var encrypted = service.Encrypt("name stuff", keySeed, null);
-
-			var decrypted = service.Decrypt(encrypted, keySeed, null);
-
-
-
-
 			var inserted = database.SecureInsert<SampleUser>(user, keySeed);
 
 			Console.WriteLine("Sample Object was inserted securely? {0} ", inserted);
