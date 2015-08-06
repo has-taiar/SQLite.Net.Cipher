@@ -1,6 +1,7 @@
 # SQLite.Net.Cipher
 
 An easy to use extension for SQLite.Net PCL that allows you to seamlessly encrypt/decrypt data when getting data in/out of the database. This library allows you to securely encrypt/decrypt group of your objects' properties simply by decorating these propertiese with one attribute (Secure). The library Works great one all major platforms (iOS, Android, Windows Universal, and .NET 4.0 onwards). There is a dependency on SQLite.Net PCL and PCLCrypto.  
+More details can be found (here)[http://www.hasaltaiar.com.au/sqlite-net-cipher-secure-your-data-on-all-mobile-platforms-seamlessly-and-effortlessly/]
 
 
 
