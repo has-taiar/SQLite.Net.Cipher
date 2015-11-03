@@ -87,6 +87,22 @@ namespace SQLite.Net.Cipher.Data
 			Encrypt(obj,keySeed);
 			return base.Insert(obj);
 		}
+		
+		/// <summary>
+		/// Inserts or Replace into the database
+		/// Before inserting, it encrypts all propertiese that have the Secure attribute. 
+		/// </summary>
+		/// <typeparam name="T">The Type of the object to be inserted</typeparam>
+		/// <param name="obj"> the object to be inserted to the database</param>
+		/// <param name="keySeed">The encryption key seed. You must use the same key seed when accessing the object out of the database.</param>
+		/// <returns>no of affected rows</returns>
+		int ISecureDatabase.SecureInsertOrReplace<T>(T obj, string keySeed)
+		{
+            Guard.CheckForNull(obj, "obj cannot be null");
+
+			Encrypt(obj,keySeed);
+			return base.InsertOrReplace(obj);
+		}
 
 		/// <summary>
 		/// Updates a row in the database
