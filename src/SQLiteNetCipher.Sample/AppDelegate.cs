@@ -51,6 +51,7 @@ namespace SQLiteNetCipher.Sample
 		}
 
 		private UILabel _label;
+		string saltText = CryptoService.GenerateRandomKey (16);
 
 		public override void ViewDidLoad()
 		{
@@ -73,7 +74,8 @@ namespace SQLiteNetCipher.Sample
 		{
 			var dbFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "mysequredb.db3");
 			var platform = new SQLite.Net.Platform.XamarinIOS.SQLitePlatformIOS();
-			ISecureDatabase database = new MyDatabase(platform, dbFilePath, new CryptoService());
+
+			ISecureDatabase database = new MyDatabase(platform, dbFilePath, new CryptoService(saltText));
 			var keySeed = "my very very secure key seed. You should use PCLCrypt strong random generator for this";
 
 			var user = new SampleUser()
@@ -81,7 +83,7 @@ namespace SQLiteNetCipher.Sample
 				Name = "Has AlTaiar", Password = "very secure password :)", Bio = "Very cool guy :) ", Id = Guid.NewGuid().ToString()
 			};
 
-			var inserted = database.SecureInsert<SampleUser>(user, keySeed);
+			var inserted = database.SecureInsert<SampleUser>(user.Clone() as SampleUser, keySeed);
 
 			Console.WriteLine("Sample Object was inserted securely? {0} ", inserted);
 

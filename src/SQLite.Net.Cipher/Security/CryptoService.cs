@@ -11,8 +11,13 @@ namespace SQLite.Net.Cipher.Security
     /// </summary>
 	public class CryptoService : ICryptoService
 	{
-		public CryptoService ()
+		private string SaltText;
+		private const int Iterations = 5000;
+		private const int EncryptionKeyLength = 16;
+
+		public CryptoService (string saltText)
 		{
+			SaltText = saltText;
 		}
 
 		/// <summary>
@@ -37,11 +42,10 @@ namespace SQLite.Net.Cipher.Security
 		/// </summary>
 		/// <param name="length">Length of the required random key</param>
 		/// <returns>random key</returns>
-		public string GenerateRandomKey(int length)
+		public static string GenerateRandomKey(int length)
 		{
-			byte[] buffer = PCLCrypto.WinRTCrypto.CryptographicBuffer.GenerateRandom((uint)length);
-			var key = Convert.ToBase64String(buffer);
-			return key;
+			byte[] buffer = WinRTCrypto.CryptographicBuffer.GenerateRandom(length);
+			return Convert.ToBase64String(buffer);
 		}
 
 		/// <summary>
@@ -104,16 +108,12 @@ namespace SQLite.Net.Cipher.Security
 			return decrypted;
 		}
 
-		byte[] CreateKeyMaterial(string keySeed, string saltText, int keyLengthInBytes = 16, int iterations = 5000)
+		static byte[] CreateKeyMaterial(string keySeed, string saltText, int keyLengthInBytes = 16, int iterations = 5000)
 		{
 			byte[] salt = Encoding.UTF8.GetBytes(saltText);
 			byte[] key = NetFxCrypto.DeriveBytes.GetBytes(keySeed, salt, iterations, keyLengthInBytes);
 			return key;
 		}
-
-		private const string SaltText = "MY-TEMP-SALT";
-		private const int Iterations = 5000;
-		private const int EncryptionKeyLength = 16;
 	}
 }
 

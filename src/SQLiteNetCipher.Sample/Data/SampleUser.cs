@@ -3,8 +3,17 @@ using SQLite.Net.Cipher.Model;
 
 namespace SQLiteNetCipher.Sample.Data
 {
-	public class SampleUser : IModel
+	public class SampleUser : IModel, ICloneable
 	{
+		#region ICloneable implementation
+
+		public object Clone ()
+		{
+			return this.MemberwiseClone();
+		}
+
+		#endregion
+
 		public string Id { get; set; }
 
 		public string Name { get; set; }

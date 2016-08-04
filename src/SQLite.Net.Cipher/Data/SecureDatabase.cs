@@ -6,6 +6,7 @@ using SQLite.Net.Cipher.Model;
 using SQLite.Net.Cipher.Security;
 using SQLite.Net.Cipher.Utility;
 using SQLite.Net.Interop;
+using System;
 
 namespace SQLite.Net.Cipher.Data
 {
@@ -22,9 +23,9 @@ namespace SQLite.Net.Cipher.Data
 		/// </summary>
 		/// <param name="platform">The platform specific engine of SQLite (ISQLitePlatform)</param>
 		/// <param name="dbfile">The sqlite db file path</param>
-		protected SecureDatabase(ISQLitePlatform platform, string dbfile) : this(platform, dbfile, new CryptoService())
+		/*protected SecureDatabase(ISQLitePlatform platform, string dbfile) : this(platform, dbfile, new CryptoService("MY-TEMP-SALT"))
 		{			
-		}
+		}*/
 
 		/// <summary>
 		/// Construct a new instance of SecureDatabase. 
@@ -87,7 +88,7 @@ namespace SQLite.Net.Cipher.Data
 			Encrypt(obj,keySeed);
 			return base.Insert(obj);
 		}
-		
+
 		/// <summary>
 		/// Inserts or Replace into the database
 		/// Before inserting, it encrypts all propertiese that have the Secure attribute. 
@@ -98,7 +99,7 @@ namespace SQLite.Net.Cipher.Data
 		/// <returns>no of affected rows</returns>
 		int ISecureDatabase.SecureInsertOrReplace<T>(T obj, string keySeed)
 		{
-            Guard.CheckForNull(obj, "obj cannot be null");
+			Guard.CheckForNull(obj, "obj cannot be null");
 
 			Encrypt(obj,keySeed);
 			return base.InsertOrReplace(obj);
@@ -177,7 +178,7 @@ namespace SQLite.Net.Cipher.Data
         {
             if (model == null) return;
 
-            IEnumerable<PropertyInfo> secureProperties = GetSecureProperties(model);
+			IEnumerable<PropertyInfo> secureProperties = GetSecureProperties(model);
 
             foreach (var propertyInfo in secureProperties)
             {

@@ -15,9 +15,9 @@ namespace SQLite.Net.Cipher.Interfaces
 		/// <param name="keySeed">The encryption key seed. You must use the same key seed when accessing the object out of the database.</param>
 		/// <returns>no of affected rows</returns>
 		int SecureInsert<T>(T obj, string keySeed) where T : class, IModel, new();
-		
+
 		/// <summary>
-		/// Inserts or Replace into the database
+		/// Inserts or Replace object into the database
 		/// Before inserting, it encrypts all propertiese that have the Secure attribute. 
 		/// </summary>
 		/// <typeparam name="T">The Type of the object to be inserted</typeparam>
