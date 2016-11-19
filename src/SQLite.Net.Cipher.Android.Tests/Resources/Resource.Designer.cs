@@ -26,10 +26,6 @@ namespace SQLite.Net.Cipher.Android.Tests
 		
 		public static void UpdateIdValues()
 		{
-			global::PCLCrypto.Resource.String.ApplicationName = global::SQLite.Net.Cipher.Android.Tests.Resource.String.ApplicationName;
-			global::PCLCrypto.Resource.String.Hello = global::SQLite.Net.Cipher.Android.Tests.Resource.String.Hello;
-			global::SQLite.Net.Platform.XamarinAndroid.Resource.String.ApplicationName = global::SQLite.Net.Cipher.Android.Tests.Resource.String.ApplicationName;
-			global::SQLite.Net.Platform.XamarinAndroid.Resource.String.Hello = global::SQLite.Net.Cipher.Android.Tests.Resource.String.Hello;
 			global::Xamarin.Android.NUnitLite.Resource.Id.OptionHostName = global::SQLite.Net.Cipher.Android.Tests.Resource.Id.OptionHostName;
 			global::Xamarin.Android.NUnitLite.Resource.Id.OptionPort = global::SQLite.Net.Cipher.Android.Tests.Resource.Id.OptionPort;
 			global::Xamarin.Android.NUnitLite.Resource.Id.OptionRemoteServer = global::SQLite.Net.Cipher.Android.Tests.Resource.Id.OptionRemoteServer;
@@ -52,6 +48,10 @@ namespace SQLite.Net.Cipher.Android.Tests
 			global::Xamarin.Android.NUnitLite.Resource.Layout.results = global::SQLite.Net.Cipher.Android.Tests.Resource.Layout.results;
 			global::Xamarin.Android.NUnitLite.Resource.Layout.test_result = global::SQLite.Net.Cipher.Android.Tests.Resource.Layout.test_result;
 			global::Xamarin.Android.NUnitLite.Resource.Layout.test_suite = global::SQLite.Net.Cipher.Android.Tests.Resource.Layout.test_suite;
+			global::SQLite.Net.Platform.XamarinAndroid.Resource.String.ApplicationName = global::SQLite.Net.Cipher.Android.Tests.Resource.String.ApplicationName;
+			global::SQLite.Net.Platform.XamarinAndroid.Resource.String.Hello = global::SQLite.Net.Cipher.Android.Tests.Resource.String.Hello;
+			global::PCLCrypto.Resource.String.ApplicationName = global::SQLite.Net.Cipher.Android.Tests.Resource.String.ApplicationName;
+			global::PCLCrypto.Resource.String.Hello = global::SQLite.Net.Cipher.Android.Tests.Resource.String.Hello;
 		}
 		
 		public partial class Attribute
