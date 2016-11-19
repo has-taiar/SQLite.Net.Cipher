@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
-        <id>SQLite.Net.Cipher-PCL</id>
+        <id>SQLite.Net.Cipher</id>
         <version>1.0.0</version>
-        <title>SQLite.Net.Cipher PCL</title>
+        <title>SQLite.Net.Cipher</title>
         <authors>has-taiar/Alex Rainman</authors>
-        <owners>has-taiar/Alex Rainman</owners>
+        <owners>has-taiar</owners>
         <licenseUrl>https://github.com/has-taiar/SQLite.Net.Cipher/master/LICENSE.txt</licenseUrl>
         <projectUrl>https://github.com/has-taiar/SQLite.Net.Cipher</projectUrl>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
-        <description>Forked from https://github.com/has-taiar/SQLite.Net.Cipher with some fixes.</description>
-        <summary>Forked from https://github.com/has-taiar/SQLite.Net.Cipher with some fixes.</summary>
-        <releaseNotes>Forked from https://github.com/has-taiar/SQLite.Net.Cipher/commits</releaseNotes>
+        <description>An easy to use extension for SQLite.Net PCL that allows you to seamlessly encrypt/decrypt data when inserted/accessed from the database by adding one simple attribute. Works great one all major platforms (iOS, Android, Windows Universal)</description>
+        <summary>An easy to use extension for SQLite.Net PCL that allows you to seamlessly encrypt/decrypt data when inserted/accessed from the database by adding one simple attribute. Works great one all major platforms (iOS, Android, Windows Universal)</summary>
+        <releaseNotes>Small fixes to allow you to provide the salt to the cryptoService</releaseNotes>
         <tags>database pcl sql sqlite secure protect cipher encrypt security protection ios android windows xamarin monotouch monodroid winrt winphone</tags>
         <dependencies>
 			<group>
