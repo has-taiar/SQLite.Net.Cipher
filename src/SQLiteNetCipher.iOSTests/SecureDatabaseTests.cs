@@ -6,6 +6,7 @@ using SQLite.Net;
 using SQLite.Net.Cipher.Data;
 using SQLite.Net.Cipher.Interfaces;
 using SQLite.Net.Cipher.Model;
+using SQLite.Net.Cipher.Security;
 using SQLite.Net.Interop;
 
 namespace SQLiteNetCipher.iOSTests
@@ -18,7 +19,8 @@ namespace SQLiteNetCipher.iOSTests
 		{
 			var dbFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "mysequredb.db3");
 			var platform = new SQLite.Net.Platform.XamarinIOS.SQLitePlatformIOS();
-			ISecureDatabase database = new MyDatabase(platform, dbFilePath);
+			var saltText = CryptoService.GenerateRandomKey(16);
+			ISecureDatabase database = new MyDatabase(platform, dbFilePath, saltText);
 			var keySeed = "my very very secure key seed. You should use PCLCrypt strong random generator for this";
 
 			var user = new SampleUser()
@@ -51,7 +53,7 @@ namespace SQLiteNetCipher.iOSTests
 
 	public class MyDatabase : SecureDatabase
 	{
-		public MyDatabase(ISQLitePlatform platform, string dbfile): base(platform, dbfile)
+		public MyDatabase(ISQLitePlatform platform, string dbfile, string saltText) : base(platform, dbfile, saltText)
 		{
 		}
 

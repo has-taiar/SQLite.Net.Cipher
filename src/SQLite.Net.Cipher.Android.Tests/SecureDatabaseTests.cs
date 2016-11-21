@@ -20,7 +20,7 @@ namespace SQLite.Net.Cipher.Android.Tests
 			var dbFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "mysequredb.db3");
 			var platform = new SQLite.Net.Platform.XamarinAndroid.SQLitePlatformAndroid();
 			string saltText = CryptoService.GenerateRandomKey(16);
-			ISecureDatabase database = new MyDatabase(platform, dbFilePath, new CryptoService(saltText));
+			ISecureDatabase database = new MyDatabase(platform, dbFilePath, saltText);
 			var keySeed = "my very very secure key seed. You should use PCLCrypt strong random generator for this";
 
 			var user = new SampleUser()
@@ -53,7 +53,7 @@ namespace SQLite.Net.Cipher.Android.Tests
 
 	public class MyDatabase : SecureDatabase
 	{
-		public MyDatabase(ISQLitePlatform platform, string dbfile, ICryptoService cryptoService): base(platform, dbfile, cryptoService)
+		public MyDatabase(ISQLitePlatform platform, string dbfile, string saltText) : base(platform, dbfile, saltText)
 		{
 		}
 

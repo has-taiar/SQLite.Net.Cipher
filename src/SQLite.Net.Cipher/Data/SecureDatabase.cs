@@ -23,8 +23,18 @@ namespace SQLite.Net.Cipher.Data
 		/// </summary>
 		/// <param name="platform">The platform specific engine of SQLite (ISQLitePlatform)</param>
 		/// <param name="dbfile">The sqlite db file path</param>
-		protected SecureDatabase(ISQLitePlatform platform, string dbfile) : this(platform, dbfile, new CryptoService("SOME-RANDOM-SALT"))
+		protected SecureDatabase(ISQLitePlatform platform, string dbfile) : this(platform, dbfile, "SOME-RANDOM-SALT")
 		{			
+		}
+
+		/// <summary>
+		/// Construct a new instance of SecureDatabase. 
+		/// </summary>
+		/// <param name="platform">The platform specific engine of SQLite (ISQLitePlatform)</param>
+		/// <param name="dbfile">The sqlite db file path</param>
+		/// /// <param name="randomSaltText">The random salt text</param>
+		protected SecureDatabase(ISQLitePlatform platform, string dbfile, string randomSaltText) : this(platform, dbfile, new CryptoService(randomSaltText))
+		{
 		}
 
 		/// <summary>
