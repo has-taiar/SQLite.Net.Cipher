@@ -18,7 +18,7 @@ To use the library you need to subclass SecureDatabase and add the attribute [Se
     
 	public class MyDatabase : SecureDatabase
 	{
-		public MyDatabase(ISQLitePlatform platform, string dbfile): base(platform, dbfile)
+		public MyDatabase(ISQLitePlatform platform, string dbfile, string someSalt): base(platform, dbfile, someSalt)
 		{
 		}
 			
@@ -45,7 +45,8 @@ To use the library you need to subclass SecureDatabase and add the attribute [Se
 ## iOS
 	var dbFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "mysequredb.db3");
 	var platform = new SQLite.Net.Platform.XamarinIOS.SQLitePlatformIOS();
-	ISecureDatabase database = new MyDatabase(platform, dbFilePath);
+	var someSalt = CryptoService.GenerateRandomKey(16);
+	ISecureDatabase database = new MyDatabase(platform, dbFilePath, someSalt);
 	var keySeed = "my very very secure key seed. This can be any string, with any size. You should use PCLCrypt strong random generator for this";
 	
 	var user = new SampleUser()
@@ -65,8 +66,9 @@ To use the library you need to subclass SecureDatabase and add the attribute [Se
 ## Android
 	var dbFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "mysequredb.db3");
 	var platform = new SQLite.Net.Platform.XamarinAndroid.SQLitePlatformAndroid();
-	ISecureDatabase database = new MyDatabase(platform, dbFilePath);
-	var keySeed = "my very very secure key seed. This can be any string, with any size. You should use PCLCrypt strong random generator for this";
+	var someSalt = CryptoService.GenerateRandomKey(16);	
+	ISecureDatabase database = new MyDatabase(platform, dbFilePath, someSalt);
+	var keySeed = "my very very secure key seed. This can be any string, with any size. You should use PCLCrypto strong random generator for this";
 	
 	var user = new SampleUser()
 	{
@@ -88,7 +90,8 @@ You could use the same code samples above for all other platforms. The only thin
 	
 	var dbFilePath = "set-your-db-file-path";
 	var platform = new SQLite.Net.Platform.WhateverPlatformYouAreUsing.SQLitePlatformX();
-	ISecureDatabase database = new MyDatabase(platform, dbFilePath);
+	var someSalt = CryptoService.GenerateRandomKey(16);	
+	ISecureDatabase database = new MyDatabase(platform, dbFilePath, someSalt);
 	
 	// the rest of the code samples above works the same way.
 
