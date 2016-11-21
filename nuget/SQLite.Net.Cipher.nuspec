@@ -4,7 +4,7 @@
         <id>SQLite.Net.Cipher</id>
         <version>1.0.0</version>
         <title>SQLite.Net.Cipher</title>
-        <authors>has-taiar/Alex Rainman</authors>
+        <authors>has-taiar</authors>
         <owners>has-taiar</owners>
         <licenseUrl>https://github.com/has-taiar/SQLite.Net.Cipher/master/LICENSE.txt</licenseUrl>
         <projectUrl>https://github.com/has-taiar/SQLite.Net.Cipher</projectUrl>
@@ -23,29 +23,38 @@
     <files>
         <!-- PCL -->
         <file src="lib/SQLite.Net.Cipher.dll" target="lib\portable-net45+netcore45+wpa81+wp8+MonoAndroid10+Xamarin.iOS10\SQLite.Net.Cipher.dll" />
+        <file src="lib/SQLite.Net.Cipher.XML" target="lib\portable-net45+netcore45+wpa81+wp8+MonoAndroid10+Xamarin.iOS10\SQLite.Net.Cipher.dll" />
 		
-		<!-- Xamarin.iOS (Classic)-->
-        <file src="lib/SQLite.Net.Cipher.dll" target="lib\monotouch\SQLite.Net.Cipher.dll" />        
+        <!-- Xamarin.iOS (Classic)-->
+        <file src="lib/SQLite.Net.Cipher.dll" target="lib\monotouch\SQLite.Net.Cipher.dll" />
+        <file src="lib/SQLite.Net.Cipher.XML" target="lib\monotouch\SQLite.Net.Cipher.dll" />        
 
         <!-- Xamarin.iOS (Unified)-->
         <file src="lib/SQLite.Net.Cipher.dll" target="lib\Xamarin.iOS10\SQLite.Net.Cipher.dll" />
+        <file src="lib/SQLite.Net.Cipher.XML" target="lib\Xamarin.iOS10\SQLite.Net.Cipher.dll" />
 
         <!-- Xamarin.Android -->
         <file src="lib/SQLite.Net.Cipher.dll" target="lib\MonoAndroid\SQLite.Net.Cipher.dll" />
+        <file src="lib/SQLite.Net.Cipher.XML" target="lib\MonoAndroid\SQLite.Net.Cipher.dll" />
 
         <!-- Windows Phone & Windows 8.1 -->
         <file src="lib/SQLite.Net.Cipher.dll" target="lib\portable-win81+wpa81\SQLite.Net.Cipher.dll" />
+        <file src="lib/SQLite.Net.Cipher.XML" target="lib\portable-win81+wpa81\SQLite.Net.Cipher.dll" />
 
         <!-- Windows 8.0 -->
         <file src="lib/SQLite.Net.Cipher.dll" target="lib\Windows8\SQLite.Net.Cipher.dll" />
+        <file src="lib/SQLite.Net.Cipher.XML" target="lib\Windows8\SQLite.Net.Cipher.dll" />
 
         <!-- Windows Phone 8.0 (ARM) -->
         <file src="lib/SQLite.Net.Cipher.dll" target="lib\windowsphone8\ARM\SQLite.Net.Cipher.dll" />
+        <file src="lib/SQLite.Net.Cipher.XML" target="lib\windowsphone8\ARM\SQLite.Net.Cipher.dll" />
 
         <!-- Windows Phone 8.0 (x86) -->
         <file src="lib/SQLite.Net.Cipher.dll" target="lib\windowsphone8\x86\SQLite.Net.Cipher.dll" />
+        <file src="lib/SQLite.Net.Cipher.XML" target="lib\windowsphone8\x86\SQLite.Net.Cipher.dll" />
 
         <!-- Generic -->
         <file src="lib/SQLite.Net.Cipher.dll" target="lib\net40\SQLite.Net.Cipher.dll" />
+        <file src="lib/SQLite.Net.Cipher.XML" target="lib\net40\SQLite.Net.Cipher.dll" />
     </files>
 </package>
